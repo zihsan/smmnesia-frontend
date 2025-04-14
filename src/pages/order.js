@@ -76,7 +76,6 @@ const Order = ({ phoneNumber }) => {
                     )}
                 </div>
             </Modal>
-
             <Breadcrumbs
                 items={[
                     { href: "/", icon: <LuHouse />, label: "Home" },
@@ -84,13 +83,11 @@ const Order = ({ phoneNumber }) => {
                 ]}
                 className="mt-4 sm:mt-8 bg-[#5395FF] mb-4"
             />
-
             <Alert
                 icon={<LuInfo />}
                 message="Jangan lupa Screenshot Jika Sudah Melakukan Transfer Lalu Hubungi Admin di WhatsApp"
                 bgColor="#5395FF"
             />
-
             <Card className="p-4 mt-4 !bg-[#5395FF]">
                 <div className="mb-4 flex justify-between items-center">
                     <p className="text-xl">INVOICE SMMNESIA.ID</p>
@@ -115,7 +112,7 @@ const Order = ({ phoneNumber }) => {
                                     <div className="join">
                                         <button
                                             onClick={() => openModal("qr")}
-                                            className="btn btn-xs join-item border-2 border-black bg-[#DDEBFF]"
+                                            className="hidden lg:flex items-center btn btn-xs join-item border-2 border-black bg-[#DDEBFF]"
                                         >
                                             <LuQrCode /> QR CODE
                                         </button>
@@ -135,8 +132,16 @@ const Order = ({ phoneNumber }) => {
                     </table>
                 </div>
             </Card>
-
-            <Table className="px-4 py-2 bg-[#5395FF] mt-3.5 mb-4">
+            <Card className="p-4 mt-4 !bg-[#5395FF] block md:hidden">
+                <QRCodeCanvas
+                    key={qrContent}
+                    value={qrContent}
+                    size={300}
+                    level="L"
+                    className="rounded-none"
+                />
+            </Card>
+            <Table className="px-4 py-2 bg-[#5395FF] mt-3.5">
                 <thead>
                     <tr>
                         <th>KATEGORI</th>

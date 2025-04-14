@@ -124,6 +124,8 @@ export default function Home({ phoneNumber, paymentMethods, layananData }) {
       status_pay: 'unpaid'
     };
 
+    console.log('💾 Sending order payload:', payload);
+
     try {
       const res = await fetch(`${getBaseURL()}/orders`, {
         method: 'POST',
@@ -132,8 +134,10 @@ export default function Home({ phoneNumber, paymentMethods, layananData }) {
       });
 
       const orderData = await res.json();
+      console.log('📦 Store Order Response:', orderData);
 
       if (!res.ok) {
+        console.error('❌ Store Order Error:', orderData);
         alert(`Gagal: ${orderData.message || 'Terjadi kesalahan saat menyimpan order'}`);
         return;
       }
@@ -142,21 +146,26 @@ export default function Home({ phoneNumber, paymentMethods, layananData }) {
 
       const qrRes = await fetch(`${getBaseURL()}/generate-qr/${order.oid}`);
       const qrData = await qrRes.json();
+      console.log('🔲 QR Generation Response:', qrData);
 
       if (!qrData.success) {
+        console.error('❌ QR Generation Error:', qrData);
         alert(`QR Gagal: ${qrData.message || 'Tidak bisa generate QR Code'}`);
         return;
       }
 
-      localStorage.setItem('currentOrder', JSON.stringify({
+      const finalData = {
         order,
         qr: qrData.qr
-      }));
+      };
+
+      console.log('✅ Final Order Data:', finalData);
+      localStorage.setItem('currentOrder', JSON.stringify(finalData));
 
       window.location.href = '/order';
 
     } catch (err) {
-      console.error('Submit error:', err);
+      console.error('❌ Submit error:', err);
       alert('Gagal menghubungi server.');
     } finally {
       setIsSubmitting(false);
@@ -168,7 +177,7 @@ export default function Home({ phoneNumber, paymentMethods, layananData }) {
       alert('Clipboard API tidak didukung di browser ini');
       return;
     }
-  
+
     navigator.clipboard.readText()
       .then((text) => {
         updateFormData({ target: text });
@@ -177,7 +186,7 @@ export default function Home({ phoneNumber, paymentMethods, layananData }) {
         console.error('Gagal mengambil teks dari clipboard:', err);
       });
   };
-  
+
   return (
     <Layout>
       <Modal id="pg" title="METODE PEMBAYARAN" className="bg-[#DDEBFF]">
@@ -285,14 +294,14 @@ export default function Home({ phoneNumber, paymentMethods, layananData }) {
             value={target}
             onChange={handleTargetChange}
           />
-         <Button 
-  className="join-item mt-7.5 !rounded-r-none" 
-  bgColor="#5395FF" 
-  hoverColor="#DDEBFF"
-  onClick={handlePaste}
->
-  <LuClipboardPaste className="mr-1" />PASTE
-</Button>
+          <Button
+            className="join-item mt-7.5 !rounded-r-none"
+            bgColor="#5395FF"
+            hoverColor="#DDEBFF"
+            onClick={handlePaste}
+          >
+            <LuClipboardPaste className="mr-1" />PASTE
+          </Button>
         </div>
         <Button className="w-full !rounded-l-none" bgColor="#5395FF" disabled={!isFormValid} hoverColor="#DDEBFF" onClick={() => openModal('pg')}>
           <LuArrowRight className="mr-1" />LANJUTKAN
