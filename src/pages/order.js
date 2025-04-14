@@ -133,6 +133,7 @@ const Order = ({ phoneNumber }) => {
                 </div>
             </Card>
             <Card className="p-4 mt-4 !bg-[#5395FF] block md:hidden">
+            <div className="flex justify-center flex-col items-center">
                 <QRCodeCanvas
                     key={qrContent}
                     value={qrContent}
@@ -140,6 +141,7 @@ const Order = ({ phoneNumber }) => {
                     level="L"
                     className="rounded-none"
                 />
+                </div>
             </Card>
             <Table className="px-4 py-2 bg-[#5395FF] mt-3.5">
                 <thead>
