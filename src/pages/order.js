@@ -132,15 +132,16 @@ const Order = ({ phoneNumber }) => {
                     </table>
                 </div>
             </Card>
-            <Card className="p-4 mt-4 !bg-[#5395FF] block md:hidden">
-            <div className="flex justify-center flex-col items-center">
-                <QRCodeCanvas
-                    key={qrContent}
-                    value={qrContent}
-                    size={300}
-                    level="L"
-                    className="rounded-none"
-                />
+            <Card className="pt-10 pb-8 mt-4 !bg-[#5395FF] block md:hidden">
+                <div className="flex justify-center flex-col items-center">
+                    <QRCodeCanvas
+                        key={qrContent}
+                        value={qrContent}
+                        size={250}
+                        level="L"
+                        className="rounded-none border-2 border-black p-4 bg-[#DDEBFF]"
+                    />
+                    <p className="text-xs font-extrabold mt-4">*SCAN QR Untuk melakukan pembayaran.</p>
                 </div>
             </Card>
             <Table className="px-4 py-2 bg-[#5395FF] mt-3.5">
